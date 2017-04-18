@@ -1,0 +1,62 @@
+<html>
+	<head>
+		<title>Form</title>
+	</head>
+
+	<body lang=EN-GB link=blue vlink=purple>
+
+    	<a id="approve" href="approve.html">
+    		<span><img src="approve.png"></span>
+		</a>
+    	&nbsp; &nbsp; &nbsp; &nbsp; 
+    	<a id="reject" href="reject.html">
+    		<span><img src="reject.png"></span>
+		</a>
+
+	</body>
+
+	<script>
+
+		// test url: http://localhost:8080/accept.html?client=Suntory&date=13/04/2017 08:57&ApproverName=Peter Brooks
+
+		/*
+		* Get the parameters of the URL by name
+		*/
+		function getParameterByName(name, url) {
+			if (!url) {
+			url = window.location.href;
+			}
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+				results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+
+		// get the current page url
+		var url = window.location.href;     
+
+		// get the parameters inside the url
+		var client = getParameterByName("client",url);
+		var date = getParameterByName("date",url);
+		var approver = getParameterByName("ApproverName",url);
+
+		// build the approve and reject urls
+		var approvedUrl = "approve.html?client=";
+		var rejectedUrl = "reject.html?client=";
+
+		approvedUrl = approvedUrl + client + "&date=" + date + "&ApproverName=" + approver;
+		approvedUrl = encodeURI(approvedUrl);
+
+		rejectedUrl = rejectedUrl + client + "&date=" + date + "&ApproverName=" + approver;
+		rejectedUrl = encodeURI(rejectedUrl);
+
+		var appr = document.getElementById("approve");
+		var rejc = document.getElementById("reject");
+
+		appr.href = approvedUrl;
+		rejc.href = rejectedUrl;
+
+	</script>
+</html>
